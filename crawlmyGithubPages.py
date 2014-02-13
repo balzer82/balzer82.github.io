@@ -24,6 +24,13 @@ for i in range(1,len(r.json())):
     repos.append(r.json()[i]['name'])
     desc.append(r.json()[i]['description'])
     url.append(r.json()[i]['html_url'])
+    
+    # Check if there is a Github Page
+    # If yes, take this url instead of the Repository URL
+    b = requests.get('https://api.github.com/repos/%s/%s/branches' % (username, repos[-1]))
+    for j in range(len(b.json())):
+        if b.json()[j]['name']=='gh-pages':
+            url[-1] = 'http://balzer82.github.io/%s' % repos[-1]
 
 # <codecell>
 
@@ -70,4 +77,5 @@ f.close()
 
 # <codecell>
 
+print('Done.')
 
